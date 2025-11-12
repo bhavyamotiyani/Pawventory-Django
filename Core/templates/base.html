@@ -1,0 +1,104 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{% block title %}PAWVENTORY{% endblock %}</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    :root{
+      --brown:#2d3436;     /* cool charcoal */
+      --tan:#f0f3f6;       /* snow fur */
+      --accent:#4aa3ff;    /* harness blue */
+      --muted:#dce4ed;     /* cold soft grey */
+    }
+    body{
+        background: var(--tan);
+        color: var(--brown);
+        font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    .navbar{
+        background: rgba(255,255,255,.88);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 2px 6px rgba(0,0,0,.06);
+    }
+
+    .navbar-brand{
+        letter-spacing: 1.5px;
+        font-weight: 700;
+        color: var(--brown) !important;
+    }
+
+    .nav-link{
+        color: var(--brown) !important;
+        font-weight: 500;
+    }
+
+    .nav-link:hover{
+        color: var(--accent) !important;
+    }
+
+    footer{
+        background: var(--brown);
+        color: #fff;
+    }
+
+    section[id],
+    header[id]{
+        scroll-margin-top: 84px;
+    }
+
+    /* Page-specific CSS injected from child templates */
+    {% block extra_css %}{% endblock %}
+
+
+  </style>
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="{% url 'home_page' %}">PAWVENTORY</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div id="nav" class="collapse navbar-collapse justify-content-end">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link" href="{% url 'home_page' %}#hero">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'home_page' %}#shop">Shop</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'home_page' %}#about">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'home_page' %}#contact">Contact</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'register_page' %}">Sign-up</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'login_page' %}">Login</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  {% block content %}{% endblock %}
+
+  {% block footer %}
+
+<footer id="contact" class="pt-5 pb-4 mt-5">
+  <div class="container text-center">
+    <h4>PAWVENTORY</h4>
+    <p class="mb-1">Email: pawventory@gmail.com • Phone: +91 97730 61563</p>
+    <small>© <span id="yr"></span> PAWVENTORY. All rights reserved.</small>
+  </div>
+  
+</footer>
+{% endblock %}
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+</script>
+
+{% block extra_js %}{% endblock %}
+
+</body>
+</html>

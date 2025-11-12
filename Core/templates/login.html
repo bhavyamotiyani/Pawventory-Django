@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Login • PAWVENTORY{% endblock %}
+{% block footer %}{% endblock %}
+
+{% block extra_css %}
+html body{
+  background: url("{% static 'img/login_img.jpg' %}") no-repeat center center fixed;
+  background-size: cover;
+}
+
+{% endblock %}
+
+{% block content %}
+<main class="d-flex align-items-center justify-content-center auth-overlay"
+      style="min-height:100vh; padding-top:90px;">
+
+  <div class="p-4 border rounded-3"
+       style="width:100%; max-width:430px; border-color: var(--muted); background-color: rgba(218, 215, 215, 0.76);">
+       
+    <h3 class="text-center mb-3">Login</h3>
+
+    {% if msg %}<div class="alert alert-warning p-2">{{ msg }}</div>{% endif %}
+    {% if messages %}
+      {% for m in messages %}
+        <div class="alert alert-{{ m.tags }} p-2">{{ m }}</div>
+      {% endfor %}
+    {% endif %}
+
+    <form method="POST" action="{% url 'login_page' %}">
+      {% csrf_token %}
+
+      <label class="form-label">Email</label>
+      <input type="email" class="form-control mb-3" name="email" required>
+
+      <label class="form-label">Password</label>
+      <input type="password" class="form-control mb-3" name="pwd" required>
+
+      <button class="btn" style="background:var(--accent); color:#fff; width:100%;">Login</button>
+    </form>
+
+    <p class="text-center mt-3">
+      New here? <a href="{% url 'register_page' %}">Create an account</a>
+    </p>
+  </div>
+</main>
+{% endblock %}
