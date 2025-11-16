@@ -75,8 +75,8 @@ def login_page(request : HttpRequest):
 
             request.session['user_id'] = myuser.id
             request.session['user_name'] = myuser.name
-            
-            # return redirect('home_page')
+
+            return redirect("home_page")        
 
         else:
             msg = "Invalid email or password."

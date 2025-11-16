@@ -45,7 +45,6 @@ id (PK)
 product_id (FK)
 image_path
 alt_text
-sort_order
 
 cart
 ..........

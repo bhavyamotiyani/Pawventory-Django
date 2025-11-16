@@ -2,7 +2,7 @@ from django.db import models
 
 # Class = Tables
 # Variables = Columns
-# ~Objects = Rows
+# Objects = Rows
 
 class user(models.Model):
 
