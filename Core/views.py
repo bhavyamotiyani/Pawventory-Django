@@ -1,12 +1,9 @@
-from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect
-import re
-from .models import *
+from django.http import HttpRequest
+from .models import User
 
-def register_page(request : HttpRequest):
-
+def register_page(request: HttpRequest):
     msg = ""
-    popup = False 
 
     if request.method == 'POST':
         name = request.POST.get('name')
@@ -17,73 +14,62 @@ def register_page(request : HttpRequest):
         c_pwd = request.POST.get('c_pwd')
         gender = request.POST.get('gender')
 
-        if not all([name,email,contact_no,dob,pwd,c_pwd,gender]): 
-            msg = "All fields are required!"
-            popup = True
+        if not all([name, email, contact_no, dob, pwd, c_pwd, gender]):
+            msg = "All fields are required"
+
+        elif len(contact_no) != 10:
+            msg = "Contact number must be 10 digits"
+
+        elif pwd != c_pwd:
+            msg = "Passwords do not match"
+
+        elif User.objects.filter(email=email).exists():
+            msg = "Email already registered"
+
+        elif User.objects.filter(contact_no=contact_no).exists():
+            msg = "Contact number already registered"
 
         else:
-            email_verify = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
-            password_verify = r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W).{8,}$'
+            User.objects.create(
+                name=name,
+                email=email,
+                contact_no=contact_no,
+                dob=dob,
+                pwd=pwd,
+                gender=gender
+            )
+            return redirect('login_page')
 
-            if len(contact_no) != 10:
-                msg = "Contact no must be of 10 digits"
-                popup = True
-
-            elif not re.match(email_verify, email):
-                msg = "Email not Valid"
-                popup = True
-            
-            elif not re.match(password_verify,pwd):
-                msg = "Password must contain, atleast uppercase, lowercase, digit, special character"
-                popup = True
-
-            elif pwd != c_pwd:
-                msg = "Password does not match"
-                popup = True
-        
-            else:
-                user.objects.create(
-                    name=name,
-                    email=email,
-                    contact_no=contact_no,
-                    dob=dob,
-                    pwd=pwd,
-                    gender=gender
-                )
-                msg = "Register Done"
-                popup = True
-
-                return redirect('login_page')
-
-    return render(request, 'register.html',{"msg":msg , "popup":popup})
+    return render(request, 'register.html', {'msg': msg})
 
 
-def login_page(request : HttpRequest):
-
+def login_page(request: HttpRequest):
     msg = ""
-    popup = False 
 
     if request.method == 'POST':
         email = request.POST.get('email')
         pwd = request.POST.get('pwd')
 
-        myuser = user.objects.filter(email=email, pwd=pwd).first()
+        user = User.objects.filter(email=email, pwd=pwd).first()
 
-        if myuser:
-            msg = f"Welcome {myuser.name}, you have logged in successfully."
-            popup = True
-
-            request.session['user_id'] = myuser.id
-            request.session['user_name'] = myuser.name
-
-            return redirect("home_page")        
-
+        if user:
+            request.session['user_id'] = user.id
+            request.session['user_name'] = user.name
+            return redirect('home_page')
         else:
-            msg = "Invalid email or password."
-            popup = True
+            msg = "Invalid email or password"
 
-    return render(request, 'login.html', {"msg": msg, "popup": popup})
+    return render(request, 'login.html', {'msg': msg})
 
-def home_page(request : HttpRequest):
-    return render(request, 'home.html')
+def home_page(request: HttpRequest):
+    if not request.session.get('user_id'):
+        return redirect('login_page')
 
+    return render(request, 'home.html', {
+        'user_name': request.session.get('user_name')
+    })
+
+
+def logout_page(request: HttpRequest):
+    request.session.flush()
+    return redirect('login_page')

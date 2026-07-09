@@ -1,93 +1,64 @@
 ======SCHEMA=====
 
 user
-.........
-id(PK)
-name
-email 
-contact_no 
-dob 
-pwd 
-c_pwd 
-gender 
-
-addresses
-..........
-id(PK)
-user_id(FK)
-label
-line1
-line2
-city
-state
-pincode
-country
-
-categories
-...........
-id
-name
-parent_id
-ImageFilePath
-
-products
-...........
-id(PK)
-category_id(FK)
-name
-description
-stock_qty
-price
-
-product_images
-...........
+---------
 id (PK)
-product_id (FK)
-image_path
-alt_text
+name
+email (UNIQUE)
+contact_no (UNIQUE)
+dob
+pwd
+gender
+
+
+category
+----------
+id (PK)
+name
+
+
+product
+--------
+id (PK)
+category_id (FK → categories.id)
+name
+price
+stock_qty
+description
+image
+
 
 cart
-..........
-id (PK)              
-user_id (FK)         
-product_id (FK)     
-quantity
-unit_price             
-added_date      
-
-Orders
-.............
+----
 id (PK)
-user_id (FK)
+user_id (FK → user.id)
+product_id (FK → products.id)
+quantity
+
+
+order
+------
+id (PK)
+user_id (FK → user.id)
+address
 total_amount
-payment_status
-order_status_id (FK)
-order_date
-delivery_address
 payment_method
 created_at
-updated_at
 
-OrderStatus
-..............
-Id (PK)
-Name (InCart, Placed, Dispatched, InTrasit, Delivered, Canceled, Rejected)
 
-order_items
-..............
+order_item
+-----------
 id (PK)
-order_id (FK)
-product_id (FK)
+order_id (FK → orders.id)
+product_id (FK → products.id)
+price
 quantity
-unit_price
-line_total
+
 
 contact
-..............
- id (PK)            
- name                 
- email               
- subject              
- message              
- sent_at              
-
+-------
+id (PK)
+name
+email
+message
+created_at

@@ -124,16 +124,21 @@
     <img id="hero-img" src="{% static 'img/dog_img_1.jpg' %}" alt="Happy dog with accessories">
     <div class="hero-caption">
       <div class="container">
+        {% if request.session.user_name %}
+          <h2 class="text-white mb-2" style="font-weight:800; letter-spacing:2px; text-transform:uppercase;">
+            Welcome, {{ request.session.user_name }}
+          </h2>
+        {% endif %}
         <h1>Accessories for Every Good Dog</h1>
         <p>Daily comfort, playful energy, and reliable gear—all in one place.</p>
-        <a class="btn hero-btn mt-2" href="#shop">Shop Bestsellers</a>
+        <a class="btn hero-btn mt-2" href="{% url 'shop_page' %}">Shop Bestsellers</a>
       </div>
     </div>
     <button class="hero-btn-control prev" onclick="changeImage(-1)">&#10094;</button>
     <button class="hero-btn-control next" onclick="changeImage(1)">&#10095;</button>
   </header>
 
-  <section id="about" class="py-5">
+  <section class="py-5">
     <div class="container">
       <div class="row align-items-center g-5">
         <div class="col-md-6">
@@ -148,13 +153,13 @@
             <li>Comfort-first accessories built to last</li>
             <li>Affordable prices and reliable everyday essentials</li>
           </ul>
-          <a href="#shop" class="btn btn-dark mt-3">Explore Products</a>
+          <a href="{% url 'shop_page' %}" class="btn btn-dark mt-3">Explore Products</a>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="shop" class="py-5">
+  <section class="py-5">
     <div class="container text-center">
       <h2 class="section-title">Shop the Pack Favorites</h2>
       <p class="section-sub">Tough, comfy, and cute enough for photos.</p>
@@ -165,7 +170,8 @@
             <img loading="lazy" src="{% static 'img/collars_1.jpg' %}" class="img-fluid" alt="Collars">
             <div class="p-3">
               <h5>Collars</h5>
-              <a href="#" class="btn btn-outline-dark btn-sm">View</a>
+              <a href="{% url 'shop_category' 'collars' %}" class="btn btn-outline-dark btn-sm">View</a>
+
             </div>
           </div>
         </div>
@@ -174,7 +180,8 @@
             <img loading="lazy" src="{% static 'img/harnesses_1.jpg' %}" class="img-fluid" alt="Harnesses">
             <div class="p-3">
               <h5>Harnesses</h5>
-              <a href="#" class="btn btn-outline-dark btn-sm">View</a>
+              <a href="{% url 'shop_category' 'harnesses' %}" class="btn btn-outline-dark btn-sm">View</a>
+
             </div>
           </div>
         </div>
@@ -183,7 +190,8 @@
             <img loading="lazy" src="{% static 'img/toys_1.jpg' %}" class="img-fluid" alt="Toys">
             <div class="p-3">
               <h5>Toys & Chews</h5>
-              <a href="#" class="btn btn-outline-dark btn-sm">View</a>
+              <a href="{% url 'shop_category' 'toys' %}" class="btn btn-outline-dark btn-sm">View</a>
+
             </div>
           </div>
         </div>
@@ -192,7 +200,7 @@
             <img loading="lazy" src="{% static 'img/bowl_1.jpg' %}" class="img-fluid" alt="Bowls">
             <div class="p-3">
               <h5>Bowls</h5>
-              <a href="#" class="btn btn-outline-dark btn-sm">View</a>
+              <a href="{% url 'shop_category' 'bowls' %}" class="btn btn-outline-dark btn-sm">View</a>
             </div>
           </div>
         </div>
@@ -208,21 +216,24 @@
           <div class="paw-card p-3">
             <img loading="lazy" src="{% static 'img/biscuits_1.jpg' %}" class="img-fluid" alt="Dog Biscuits">
             <h5 class="mt-3">Dog Biscuits</h5>
-            <button class="btn btn-dark btn-sm">View</button>
+            <a href="{% url 'shop_page' %}" class="btn btn-dark btn-sm">View</a>
+
           </div>
         </div>
         <div class="col-md-4">
           <div class="paw-card p-3">
             <img loading="lazy" src="{% static 'img/ball_2.jpg' %}" class="img-fluid" alt="Chew Ball">
             <h5 class="mt-3">Textured Rubber Chew Ball</h5>
-            <button class="btn btn-dark btn-sm">View</button>
+            <a href="{% url 'shop_page' %}" class="btn btn-dark btn-sm">View</a>
+
           </div>
         </div>
         <div class="col-md-4">
           <div class="paw-card p-3">
             <img loading="lazy" src="{% static 'img/chain_1.jpg' %}" class="img-fluid" alt="Chain">
             <h5 class="mt-3">Chain</h5>
-            <button class="btn btn-dark btn-sm">View</button>
+            <a href="{% url 'shop_page' %}" class="btn btn-dark btn-sm">View</a>
+
           </div>
         </div>
       </div>

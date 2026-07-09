@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+  <h3 class="mb-4">Your Cart</h3>
+
+  {% if cart_items %}
+  <table class="table table-bordered align-middle">
+    <thead class="table-light">
+      <tr>
+        <th>Product</th>
+        <th>Price</th>
+        <th class="text-center">Quantity</th>
+        <th class="text-center">Stock</th>
+        <th>Total</th>
+        <th class="text-center">Remove</th>
+      </tr>
+    </thead>
+
+    <tbody>
+    {% for item in cart_items %}
+      <tr>
+        <td>{{ item.product.name }}</td>
+
+        <td>₹ {{ item.product.price }}</td>
+
+        <td class="text-center">
+          <a href="{% url 'decrease_quantity' item.id %}"
+             class="btn btn-sm btn-outline-dark">−</a>
+
+          <span class="mx-2 fw-bold">{{ item.quantity }}</span>
+
+          <a href="{% url 'increase_quantity' item.id %}"
+             class="btn btn-sm btn-outline-dark">+</a>
+        </td>
+
+        <td class="text-center">{{ item.product.stock_qty }}</td>
+
+        <td>₹ {{ item.product.price|floatformat:0|add:"0"|default_if_none:0 }}</td>
+
+        <td class="text-center">
+          <a href="{% url 'remove_from_cart' item.id %}"
+             class="btn btn-sm btn-danger">✕</a>
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+
+  <div class="d-flex justify-content-between align-items-center mt-4">
+    <h4>Total Amount: ₹ {{ total_amount }}</h4>
+
+    <a href="{% url 'checkout' %}" class="btn btn-dark px-4">
+      Proceed to Checkout
+    </a>
+  </div>
+
+  {% else %}
+    <div class="alert alert-info">
+      Your cart is empty.
+    </div>
+  {% endif %}
+</div>
+{% endblock %}
