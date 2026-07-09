@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}About • PAWVENTORY{% endblock %}
+
+{% block content %}
+<section class="py-5 mt-5">
+  <div class="container">
+
+    <div class="text-center mb-5">
+      <h2 class="section-title">About PAWVENTORY</h2>
+      <p class="section-sub">Made for dogs. Loved by humans.</p>
+    </div>
+
+    <div class="row align-items-center g-5">
+      <div class="col-md-6">
+        <img src="{% static 'img/dog_img_4.jpg' %}" class="img-fluid rounded-4">
+      </div>
+      <div class="col-md-6">
+        <p>
+          PAWVENTORY offers reliable dog accessories built
+          for comfort, durability, and everyday use.
+        </p>
+        <ul>
+          <li>Comfort-first products</li>
+          <li>Trusted quality</li>
+          <li>Affordable pricing</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+{% endblock %}

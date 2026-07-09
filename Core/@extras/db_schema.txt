@@ -1,0 +1,64 @@
+======SCHEMA=====
+
+user
+---------
+id (PK)
+name
+email (UNIQUE)
+contact_no (UNIQUE)
+dob
+pwd
+gender
+
+
+category
+----------
+id (PK)
+name
+
+
+product
+--------
+id (PK)
+category_id (FK → categories.id)
+name
+price
+stock_qty
+description
+image
+
+
+cart
+----
+id (PK)
+user_id (FK → user.id)
+product_id (FK → products.id)
+quantity
+
+
+order
+------
+id (PK)
+user_id (FK → user.id)
+address
+total_amount
+payment_method
+created_at
+
+
+order_item
+-----------
+id (PK)
+order_id (FK → orders.id)
+product_id (FK → products.id)
+price
+quantity
+
+
+contact
+-------
+id (PK)
+name
+email
+message
+created_at

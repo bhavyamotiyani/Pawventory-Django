@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class="container text-center mb-4">
+  <h1 class="fw-bold">Shop</h1>
+  <p class="text-muted">Find the best accessories for your dog 🐾</p>
+  <hr class="w-25 mx-auto">
+</div>
+<div class="container mt-5">
+  <div class="row">
+    {% for product in products %}
+    <div class="col-md-3 mb-4">
+      <div class="card h-100">
+
+        <img
+          src="{% static 'img/' %}{{ product.image }}"
+          class="card-img-top"
+          alt="{{ product.name }}">
+
+        <div class="card-body text-center">
+          <h5>{{ product.name }}</h5>
+          <p>₹ {{ product.price }}</p>
+          <p>Stock: {{ product.stock_qty }}</p>
+
+          <a href="{% url 'add_to_cart' product.id %}"
+             class="btn btn-dark btn-sm">
+            Add to Cart
+          </a>
+        </div>
+
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock %}
